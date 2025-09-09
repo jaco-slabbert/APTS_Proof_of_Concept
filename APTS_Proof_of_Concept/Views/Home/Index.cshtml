@@ -1,8 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "APTS POC";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center h-100 my-5">
+    <h1 class="display-4 mb-4" style="margin-top: 16rem !important;">Welcome to APTS POC</h1>
+    <p class="mb-4">
+        Click the buttons below to download the templates we use or the generated result.
+    </p>
+
+    <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-primary btn-ripple" href="@Url.Action("GenerateWithEmbed", "Home")">Download Generated</a>
+        <a class="btn btn-outline-primary btn-ripple" href="@Url.Action("DownloadTemplates", "Home")">Download Templates</a>
+    </div>
 </div>

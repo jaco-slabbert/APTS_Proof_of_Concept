@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.IO.Compression;
 using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 using V = DocumentFormat.OpenXml.Vml;
 using VOffice = DocumentFormat.OpenXml.Vml.Office;
@@ -35,6 +36,48 @@ namespace APTS_Proof_of_Concept.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult DownloadTemplates()
+        {
+            // Path to your templates folder
+            var templatesFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates");
+
+            if (!Directory.Exists(templatesFolder))
+            {
+                return NotFound("Templates folder not found.");
+            }
+
+            // Get all .docx files
+            var files = Directory.GetFiles(templatesFolder, "*.docx");
+
+            if (files.Length == 0)
+            {
+                return NotFound("No template files found.");
+            }
+
+            // Create the zip in memory
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var filePath in files)
+                    {
+                        var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                        var fileName = Path.GetFileName(filePath);
+                        var entry = zipArchive.CreateEntry(fileName, CompressionLevel.Fastest);
+
+                        using (var entryStream = entry.Open())
+                        {
+                            entryStream.Write(fileBytes, 0, fileBytes.Length);
+                        }
+                    }
+                }
+
+                memoryStream.Position = 0; // Reset stream position
+                return File(memoryStream.ToArray(), "application/zip", "templates.zip");
+            }
         }
 
         [HttpGet]
