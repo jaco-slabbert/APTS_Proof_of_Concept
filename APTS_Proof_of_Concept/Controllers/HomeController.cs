@@ -104,7 +104,11 @@ namespace APTS_Proof_of_Concept.Controllers
                 ["<<Data1>>"] = "Some data from the DB",
                 ["<<X1>>"] = "X marks the spot",
                 ["<<X2>>"] = "X",
-                ["<<O1>>"] = "O"
+                ["<<X2|1>>"] = "X",
+                ["<<X2|0>>"] = "",
+                ["<<O1>>"] = "O",
+                ["<<O1|1>>"] = "O",
+                ["<<O1|0>>"] = ""
             };
 
             // Recursively process the template and get a MemoryStream of the processed file
