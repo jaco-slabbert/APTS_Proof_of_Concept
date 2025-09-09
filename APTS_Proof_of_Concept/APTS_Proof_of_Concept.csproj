@@ -14,4 +14,16 @@
     <Folder Include="wwwroot\output\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\templates\Embed1.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\templates\Embed2.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\templates\Template.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
